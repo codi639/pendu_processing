@@ -108,26 +108,14 @@ void draw() {
 }
 
 void newRound() {
-  // Choix aléatoire des 10 drapeaux sans doublons
-  int[] indexes = new int[nomPays.length];
-  for (int i = 0; i < indexes.length; i++) {
-    indexes[i] = i;
+  // choix aléatoire des dix drapeaux
+  for (int i = 0; i < indexDrapeauChoisis.length; i++) {
+    int index = floor(random(drapeauPays.length));
+    indexDrapeauChoisis[i] = index;
+    drapeauDeJeux[i] = drapeauPays[index];
   }
-  shuffle(indexes);
-  int[] indexDrapeauChoisis = new int[10];
-  for (int i = 0; i < 10; i++) {
-    indexDrapeauChoisis[i] = indexes[i];
-  }
-  // Choix aléatoire du drapeau à deviner parmi les 10
-  int indexDuPaysADeviner = indexDrapeauChoisis[floor(random(10))];
-  drapeauDeJeux = new PImage[10];
-  for (int i = 0; i < 10; i++) {
-    drapeauDeJeux[i] = loadImage(drapeauPays[indexDrapeauChoisis[i]]);
-  }
-  // Stockage de l'index du drapeau à deviner
-  indexDuPaysADevinerDansListe = indexDuPaysADeviner;
-  // Recherche du nom du pays associé au drapeau à deviner
-  paysADeviner = pays[indexDrapeauChoisis[indexDuPaysADeviner]];
+  // choix aléatoire du drapeau à afficher
+  indexDuPaysADeviner = indexDrapeauChoisis[floor(random(indexDrapeauChoisis.length))];
 }
 
 void mousePressed() {

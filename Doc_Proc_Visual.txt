@@ -1,0 +1,5 @@
+installer l'ext proc sur visu
+installer processing (dans le dossier il y a un fichier processing-java)
+C:\Users\gilj\Downloads\processing-4.2-windows-x64\processing-4.2\processing-java 
+	--sketch="Z:\Jean-Lou_Gilbertas\PII\Processing\TP1\pendu_processing" --run
+
