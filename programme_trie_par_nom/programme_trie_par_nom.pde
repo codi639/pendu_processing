@@ -1,7 +1,7 @@
 void setup()
 {
-  String fichierNonTrie = "Z:/Jean-Lou_Gilbertas/PII/Processing/TP1/nom_pays.txt";
-  String fichierTrie = "Z:/Jean-Lou_Gilbertas/PII/Processing/TP1/fichier_pays_triee.txt";
+  String fichierNonTrie = "Z:/Jean-Lou_Gilbertas/PII/Processing/TP1/pendu_processing/nom_pays_triee.txt";
+  String fichierTrie = "Z:/Jean-Lou_Gilbertas/PII/Processing/TP1/pendu_processing/nom_pays_triee.txt";
 
   String[] chaines = loadStrings(fichierNonTrie);
 

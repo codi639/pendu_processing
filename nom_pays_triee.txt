@@ -1,4 +1,4 @@
-Afrique du Sud
+Afghanistant
 Algérie
 Allemagne
 Angola
@@ -9,17 +9,16 @@ Bénin
 Canada
 Chine
 Congo
-Côte d’Ivoire
-Egypt
+Egypte
 Espagne
 Etats-Unis
-Ethiopia
+Ethiopie
 France
 Ghana
-Hollande
 Hongrie
 Inde
 Indonésie
+Irlande
 Italie
 Japon
 Kenya
@@ -36,15 +35,16 @@ Roumanie
 Royaume-Uni
 Russie
 Rwanda
+Sénégal
 Singapour
 Slovaquie
-Slovenie
+Slovénie
 Suisse
-Sénégal
 Thaïlande
+Tonga
 Tunisie
 Turquie
 Ukraine
 Venezuela
-Vietnam
+Viêt-Nam
 Zimbabwe
