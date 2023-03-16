@@ -14,18 +14,22 @@ PImage[] tableauDrapeaux;
 PImage[] tableauPendu = new PImage[6];
 String paysATrouver;
 int[] tableauNombreAleatoire;
-int[] positionDrapeaux;
-int indexPaysChoisi;
-int indexPaysADeviner;
+int[] positionDrapeaux = {120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200};
+int indexTampon;
+int indexPaysATrouver;
+int drapeauATrouver;
 
 void setup(){
     size(1500, 600);
-    background(0);
-    fill(30);
+    background(200, 218, 170);
+    //fill(30);
+    fill(0);
+    textSize(30);
     tableauPays = loadStrings("nom_pays_triee.txt");
     tableauDrapeaux = new PImage[tableauPays.length];
     tableauNombreAleatoire = new int[10];
-    int[] positionDrapeaux = {120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200};
+    // int[] positionDrapeaux = {120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200};
+
     for(int i = 0; i < tableauPays.length; i++){
         tableauDrapeaux[i] = loadImage("image_drapeau/w80/" + tableauPays[i] + ".png");
     }
@@ -35,18 +39,28 @@ void setup(){
     }
     
     // println(tableauPays.length, tableauDrapeaux.length);
-    initialiserJeu();
+    initialiserJeu();background(200, 218, 170);
 }
 
-void draw(){
-    background(0);
-}
 
 void initialiserJeu(){
     for(int i = 0; i < tableauNombreAleatoire.length; i++){
         tableauNombreAleatoire[i] = int(random(49));
     }
-    indexPaysADeviner = int(random(9));
-    paysATrouver = tableauPays[indexPaysADeviner];
+    indexTampon = int(random(9));
+    indexPaysATrouver = tableauNombreAleatoire[indexTampon];
+    paysATrouver = tableauPays[indexPaysATrouver];
+    
     println(paysATrouver);
+}
+
+void draw(){
+    background(200, 218, 170);
+    text("Jeu du Pendu", width/2 - 70, 50);
+    image(tableauPendu[0], 100, 100);
+
+    for (int i = 0; i < tableauNombreAleatoire.length; i++) {
+        image(tableauDrapeaux[indexPaysATrouver], 1300, 100);
+        image(tableauDrapeaux[tableauNombreAleatoire[i]], positionDrapeaux[i], 300);
+    }
 }
