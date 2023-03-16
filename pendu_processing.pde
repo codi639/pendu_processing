@@ -57,8 +57,10 @@ void draw() {
 String[] nomPays; // tableau contenant la liste des noms de pays
 PImage[] drapeauPays = new PImage[50]; // tableau contenant les images des drapeaux
 PImage[] drapeauDeJeux; // tableau contenant les dix drapeaux choisis au hasard
+PImage[] tableauPendu = new PImage[7];
 int[] indexDrapeauChoisis; // tableau contenant les index des dix drapeaux choisis
-int[] bouttonX; // tableau contenant les positions X des boutons pour sélectionner les pays
+int[] positionDrapeaux ; // tableau contenant les positions X des boutons pour sélectionner les pays
+int[] bouttonX;
 int[] bouttonY; // tableau contenant les positions Y des boutons pour sélectionner les pays
 int buttonWidth = 100; // largeur des boutons pour sélectionner les pays
 int buttonHeight = 60; // hauteur des boutons pour sélectionner les pays
@@ -68,7 +70,7 @@ int round = 1; // numéro du tour en cours
 int maxRounds = 10; // nombre de tours
 
 void setup() {
-  size(800, 600); // taille de la fenêtre de jeu
+  size(1500, 600); // taille de la fenêtre de jeu
   background(255); // couleur de fond
   textSize(20); // taille de police pour le texte
   textAlign(CENTER, CENTER); // alignement du texte
@@ -76,6 +78,9 @@ void setup() {
   println("Nom du pays : " + nomPays[0]);
   int t = 0;
   PImage imageTampon = loadImage("image_drapeau/w80/" + nomPays[t] + ".png");
+  for (int i = 0; i < 6; i++) {
+    tableauPendu[i] = loadImage("image_pendu/pendu" + (i + 1) + ".png"); // chargement des images du pendu
+  }
 
   // drapeauPays = loadFilesFromNames("image_drapeau/w80/"); // chargement des drapeaux depuis un dossier
   for (int i = 0; i < nomPays.length; i++) {
@@ -84,7 +89,8 @@ void setup() {
   }
   indexDrapeauChoisis = new int[10]; // initialisation du tableau des index des drapeaux choisis
   drapeauDeJeux = new PImage[10]; // initialisation du tableau des drapeaux choisis
-  bouttonX = new int[5]; // initialisation du tableau des positions X des boutons
+  int[] positionDrapeaux = {120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200};
+  bouttonX = new int[10]; // initialisation du tableau des positions X des boutons
   bouttonY = new int[2]; // initialisation du tableau des positions Y des boutons
   // calcul des positions des boutons pour sélectionner les pays
   for (int i = 0; i < bouttonX.length; i++) {
@@ -99,7 +105,7 @@ void setup() {
 void draw() {
   // affichage des drapeaux choisis
   for (int i = 0; i < drapeauDeJeux.length; i++) {
-    image(drapeauDeJeux[i], bouttonX[i%5], bouttonY[i/5], buttonWidth, buttonHeight);
+    image(drapeauDeJeux[i], positionDrapeaux[i], 300);
   }
   // affichage du texte
   fill(0);
