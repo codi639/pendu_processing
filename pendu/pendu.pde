@@ -45,7 +45,17 @@ void setup(){
 
 void initialiserJeu(){
     for(int i = 0; i < tableauNombreAleatoire.length; i++){
+        int aleaTampon = 0;
+        int j = 0;
         tableauNombreAleatoire[i] = int(random(49));
+        aleaTampon = int(random(49));
+        for (j = 0; j < i; j++) {
+            if (aleaTampon == tableauNombreAleatoire[j]) {
+                aleaTampon = int(random(49));
+                j = 0;
+            }
+        }
+        tableauNombreAleatoire[i] = aleaTampon;
     }
     indexTampon = int(random(9));
     indexPaysATrouver = tableauNombreAleatoire[indexTampon];
