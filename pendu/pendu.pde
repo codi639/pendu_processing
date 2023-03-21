@@ -128,7 +128,6 @@ void draw(){
     text("Jeu du Pendu", width/2 - 70, 50);
     text("Trouvez le drapeau du pays suivant : " + paysATrouver, 100, 300);
 
-    image(tableauPendu[6], 100, 100);
     image(tableauPendu[indexPendu], 100, 100);
     image(tableauDrapeaux[indexPaysATrouver], 1300, 100);
 
