@@ -47,7 +47,7 @@ void setup(){
     // Chargement des images du pendu
     for (int i = 0; i <= 6; i++) {
         tableauPendu[i] = loadImage("image_pendu/pendu" + (i + 1) + ".png"); // chargement des images du pendu
-        tableauPendu[i].resize(170, 140);
+        tableauPendu[i].resize(300, 240);
     }
 
     initialiserJeu();
@@ -133,7 +133,7 @@ void draw(){
     text("Jeu du Pendu", width/2 - 70, 50);
     text("Trouvez le drapeau du pays suivant :    " + paysATrouver, 100, 300);
 
-    image(tableauPendu[indexPendu], 100, 100);
+    image(tableauPendu[indexPendu], 100, 30);
     // A décommenter si on veut afficher le drapeau à trouver
     image(tableauDrapeaux[indexPaysATrouver], 1300, 100);
 
