@@ -7,29 +7,37 @@
  **********************************************************************/
 
 
-// Déclaration des variables globales
+/* Déclaration des variables globales */
+// Tableaux des pays, drapeaux et images du pendu
 String[] tableauPays;
 PImage[] tableauDrapeaux;
 PImage[] tableauPendu = new PImage[7];
+// Variable pour le pays à trouver 
 String paysATrouver;
-String message;
+// Tableau de nombre aléatoire et de position des drapeaux
 int[] tableauNombreAleatoire;
 int[] positionDrapeaux = {120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200};
+// Variables pour les indices et index nécessaire au jeu
 int indexTampon;
 int indexPaysATrouver;
 int drapeauATrouver;
+int indexPendu;
+// Variables pour la position du drapeau à trouver
 int positionXdrapeauATrouver;
 int positionYDrapeauATrouver;
+// Variables pour la position du rectangle de rejouer
 int rectX = 1300, rectY = 500;
-int indexPendu;
+// Variable pour l'état du jeu et pour savoir si le joueur a trouvé le bon drapeau ou s'il a perdu la partie
 boolean etatJeu = true;
 boolean drapeauTrouve;
+// Variable pour les couleurs du jeu
 color couleurDeFond;
 color couleurRejouer;
 color couleurPerdu;
 color couleurGagne;
 
 void setup(){
+    // Initialisation de la fenêtre
     size(1500, 600);
     background(200, 218, 170);
     fill(0);
@@ -37,17 +45,20 @@ void setup(){
 
     // Initialisation du tableau des pays
     tableauPays = loadStrings("nom_pays_triee.txt");
+    // Initialisation du tableau des drapeaux
     tableauDrapeaux = new PImage[tableauPays.length];
+    // Initialisation du tableau de nombre aléatoire
     tableauNombreAleatoire = new int[10];
+
     // Chargement des images des drapeaux
-    for(int i = 0; i < tableauPays.length; i++){
-        tableauDrapeaux[i] = loadImage("image_drapeau/w80/" + tableauPays[i] + ".png");
+    for(int indiceDrapeau = 0; indiceDrapeau < tableauPays.length; indiceDrapeau++){
+        tableauDrapeaux[indiceDrapeau] = loadImage("image_drapeau/w80/" + tableauPays[indiceDrapeau] + ".png");
     }
 
     // Chargement des images du pendu
-    for (int i = 0; i <= 6; i++) {
-        tableauPendu[i] = loadImage("image_pendu/pendu" + (i + 1) + ".png"); // chargement des images du pendu
-        tableauPendu[i].resize(300, 240);
+    for (int indicePendu = 0; indicePendu <= 6; indicePendu++) {
+        tableauPendu[indicePendu] = loadImage("image_pendu/pendu" + (indicePendu + 1) + ".png"); // chargement des images du pendu
+        tableauPendu[indicePendu].resize(300, 240);
     }
 
     initialiserJeu();
@@ -55,49 +66,61 @@ void setup(){
 
 
 void initialiserJeu(){
-    // Réinitialisation des variables
+    /* Réinitialisation des variables */
+    // Index pour l'état du pendu
     indexPendu = 0;
+    // Le joueur n'a pas trouvé le drapeau (pas encore...)
     drapeauTrouve = false;
+    // Le jeu est en cours
     etatJeu = true;
+    // Couleur de fond
     couleurDeFond = color(200, 218, 170);
     couleurRejouer = color(200, 218, 170);
     couleurPerdu = color(200, 218, 170);
     couleurGagne = color(200, 218, 170);
 
     // Initialisation du tableau de nombre aléatoire
-    for(int i = 0; i < tableauNombreAleatoire.length; i++){
+    for(int indiceNombreAlea = 0; indiceNombreAlea < tableauNombreAleatoire.length; indiceNombreAlea++){
         int aleaTampon = 0;
         int indiceTampon = 0;
-        tableauNombreAleatoire[i] = int(random(50));
+        // Remplissage du tableau de nombre aléatoire
+        tableauNombreAleatoire[indiceNombreAlea] = int(random(50));
         aleaTampon = int(random(50));
-        for (indiceTampon = 0; indiceTampon < i; indiceTampon++) {
+        // Vérification que le nombre aléatoire n'est pas déjà dans le tableau
+        for (indiceTampon = 0; indiceTampon < indiceNombreAlea; indiceTampon++) {
+            // Si le nombre aléatoire est déjà dans le tableau, on en génère un nouveau
             if (aleaTampon == tableauNombreAleatoire[indiceTampon]) {
                 aleaTampon = int(random(50));
                 indiceTampon = 0;
             }
         }
-        tableauNombreAleatoire[i] = aleaTampon;
+        tableauNombreAleatoire[indiceNombreAlea] = aleaTampon;
     }
 
     // Sélection d'un drapeau aléatoire
     indexTampon = int(random(9));
     indexPaysATrouver = tableauNombreAleatoire[indexTampon];
     paysATrouver = tableauPays[indexPaysATrouver];
+
+    // Détermination de la position du drapeau à trouver
     positionXdrapeauATrouver = indexTampon * 120 + 120;
     positionYDrapeauATrouver = 400;
 }
 
 // Fonction qui permet de tester si le jouer a cliqué sur le bon drapeau ou non
 void mouseClicked() {
-    for (int i = 0; i < tableauNombreAleatoire.length; i++) {
+    for (int compteur = 0; compteur < tableauNombreAleatoire.length; compteur++) {
         // Si le joueur clique sur un drapeau et non sur un drapeau qui a disparu
-        if (mouseX > positionDrapeaux[i] - 10 && mouseX < positionDrapeaux[i] + 90 && mouseY > 390 && mouseY < 490 && tableauNombreAleatoire[i] != -1) {
+        if (mouseX > positionDrapeaux[compteur] - 10 && mouseX < positionDrapeaux[compteur] + 90 && mouseY > 390 && mouseY < 490 && tableauNombreAleatoire[compteur] != -1) {
             // Tant que le joueur n'a pas trouvé le bon drapeau et qu'il n'a pas utilisé tous ses essais
             if (indexPendu < 6 && !drapeauTrouve){
                 // Si le joueur clique sur le bon drapeau
                 if (mouseX > positionXdrapeauATrouver - 10 && mouseX < positionXdrapeauATrouver + 90 && mouseY > 400 - 10 && mouseY < 490) {
+                    // Le drapeau est trouvé
                     drapeauTrouve = true;
+                    // Le jeu est fini
                     etatJeu = false;
+                    // On affiche le message de victoire
                     couleurGagne = color(255, 0, 0);
                     partieTerminee();
                 } 
@@ -106,11 +129,13 @@ void mouseClicked() {
                     indexPendu++;
                     // Si le joueur n'a pas utilisé tous ses essais
                     if (indexPendu < 6) {
-                        tableauNombreAleatoire[i] = -1;
+                        tableauNombreAleatoire[compteur] = -1;
                     }
                     // Si le joueur a utilisé tous ses essais 
                     else {
+                        // Le jeu est fini
                         etatJeu = false;
+                        // On affiche le message de défaite
                         couleurPerdu = color(255, 0, 0);
                         partieTerminee();
                     }
@@ -135,25 +160,26 @@ void draw(){
 
     image(tableauPendu[indexPendu], 100, 30);
     // A décommenter si on veut afficher le drapeau à trouver
-    image(tableauDrapeaux[indexPaysATrouver], 1300, 100);
+    // image(tableauDrapeaux[indexPaysATrouver], 1300, 100);
 
     // Affichage du message de victoire
     if (drapeauTrouve) {
         fill(couleurGagne);
         text("Bravo, vous avez gagné !", 100, 550);
-    } // Affichage du message de défaite 
+    } 
+    // Affichage du message de défaite 
     else {
         fill(couleurPerdu);
         text("Vous avez perdu !", 100, 550);
     }
     
     // Affichage des drapeaux
-    for (int i = 0; i < tableauNombreAleatoire.length; i++) {
+    for (int indexClique = 0; indexClique < tableauNombreAleatoire.length; indexClique++) {
         fill(255, 255, 255, 128);
-        rect(positionDrapeaux[i] - 10, 390, 100, 100);
-        if (tableauNombreAleatoire[i] != -1) {
-            
-            image(tableauDrapeaux[tableauNombreAleatoire[i]], positionDrapeaux[i], 400);
+        rect(positionDrapeaux[indexClique] - 10, 390, 100, 100);
+        // Vérification de n'afficher que les drapeaux qui n'ont pas été cliqués
+        if (tableauNombreAleatoire[indexClique] != -1) {
+            image(tableauDrapeaux[tableauNombreAleatoire[indexClique]], positionDrapeaux[indexClique], 400);
         }
     }
     
@@ -167,9 +193,9 @@ void draw(){
 }
 
 void partieTerminee(){
-    for (int i = 0; i < tableauNombreAleatoire.length; i++) {
-        if (i != indexTampon) {
-            tableauNombreAleatoire[i] = -1;
+    for (int indexClique = 0; indexClique < tableauNombreAleatoire.length; indexClique++) {
+        if (indexClique != indexTampon) {
+            tableauNombreAleatoire[indexClique] = -1;
         }
     }
 
